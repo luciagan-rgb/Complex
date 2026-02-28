@@ -1,0 +1,87 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>布局复杂度评分（前端原型）</title>
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="header">
+        <div class="header__title">布局复杂度评分（原型）</div>
+        <div class="header__meta" id="headerMeta"></div>
+      </header>
+
+      <main class="main">
+        <section class="card" id="screenProfile" aria-labelledby="profileTitle">
+          <h1 class="card__title" id="profileTitle">基本信息</h1>
+          <p class="card__subtitle">
+            编号会自动生成并保存到本机（刷新不丢）。确认后进入组别选择（20 组 × 每组 50 张）。
+          </p>
+
+          <form id="profileForm" class="form" autocomplete="off">
+            <div class="field">
+              <label class="field__label" for="participantId">编号（自动生成）</label>
+              <input class="field__input" id="participantId" name="participantId" type="text" readonly />
+              <div class="field__hint">如果你清空本地数据，会重新生成新的编号。</div>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="ageRange">年龄范围</label>
+              <select class="field__input" id="ageRange" name="ageRange" required>
+                <option value="" selected disabled>请选择</option>
+                <option value="lt18">18以下</option>
+                <option value="18-30">18-30</option>
+                <option value="30-40">30-40</option>
+                <option value="40-50">40-50</option>
+                <option value="gt50">50以上</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label class="field__label" for="gender">性别</label>
+              <select class="field__input" id="gender" name="gender" required>
+                <option value="" selected disabled>请选择</option>
+                <option value="male">男</option>
+                <option value="female">女</option>
+                <option value="other">其他/不透露</option>
+              </select>
+            </div>
+
+            <div class="actions">
+              <button class="btn btn--primary" type="submit">确认并进入组别选择</button>
+              <button class="btn" type="button" id="btnResetAll">清空本地数据（重新开始）</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card hidden" id="screenGroups" aria-labelledby="groupsTitle">
+          <div class="card__top">
+            <div>
+              <h2 class="card__title" id="groupsTitle">选择组别</h2>
+              <p class="card__subtitle">共 20 组，每组 50 张图。这里只做组别选择（后续可接评分页）。</p>
+            </div>
+            <div class="card__topActions">
+              <button class="btn" type="button" id="btnBackToProfile">返回修改信息</button>
+              <button class="btn btn--danger" type="button" id="btnResetAll2">清空本地数据</button>
+            </div>
+          </div>
+
+          <div class="note" id="imagesNote"></div>
+
+          <div class="groups" id="groupsGrid" role="list"></div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="footer__text">
+          本页面为静态原型：数据仅保存在浏览器本地（localStorage），目前不上传也不收集评分结果。
+        </div>
+      </footer>
+    </div>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
