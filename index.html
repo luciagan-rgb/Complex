@@ -15,7 +15,69 @@
       </header>
 
       <main class="main">
-        <section class="card" id="screenProfile" aria-labelledby="profileTitle">
+        <!-- 第一部分：欢迎与知情同意 -->
+        <section class="card intro-card" id="screenWelcome" aria-labelledby="welcomeTitle">
+          <h1 class="card__title intro-title" id="welcomeTitle">欢迎参与网页布局复杂度感知研究</h1>
+          <div class="intro-body">
+            <p>您好！</p>
+            <p>这里是东南大学人机交互实验室，感谢您抽出宝贵时间参与本次研究。</p>
+            <p><strong>研究目的：</strong>我们希望了解普通用户是如何感知网页布局的复杂程度的。您的反馈将帮助我们建立更科学的评估模型，以指导未来的网页设计，创造更舒适、易用的用户体验。</p>
+            <p><strong>任务内容：</strong>您将看到一系列网页的截图，并对它们元素之间的布局复杂度进行评分。</p>
+            <p><strong>预计用时：</strong>10–15 分钟</p>
+            <p><strong>数据保密：</strong>您的所有回答都将被严格保密，且仅用于本次研究分析。数据将以匿名形式处理。</p>
+            <p>如果您理解并同意参与本次研究，请点击下方按钮开始。</p>
+          </div>
+          <div class="intro-actions">
+            <button class="btn btn--primary btn--large" type="button" id="btnConsent">我已了解并同意，开始任务</button>
+          </div>
+        </section>
+
+        <!-- 第二部分：任务说明与示例 -->
+        <section class="card intro-card hidden" id="screenInstructions" aria-labelledby="instructionsTitle">
+          <h1 class="card__title intro-title" id="instructionsTitle">如何评分？（请仔细阅读）</h1>
+          <div class="intro-body">
+            <p>在接下来的每个问题中，您都会看到两张并排的图片：</p>
+            <ul>
+              <li><strong>左图</strong>是【原始网页截图】，它能帮助您了解这是一个什么类型的网站。</li>
+              <li><strong>右图</strong>是【布局结构图】，它将网页中的所有元素抽象成了方块。</li>
+            </ul>
+            <p><strong>您的任务是：</strong><br />请参考右侧的【布局结构图】，专注于评估页面<strong>「布局」本身的复杂程度</strong>，即整个页面中元素的对称性如何，页面是否平衡等，尽量忽略原始图片、颜色或文字内容带来的影响。</p>
+
+            <h2 class="intro-h2">评分标准示例</h2>
+
+            <p><strong>【非常简洁】</strong>的布局，通常具有以下特征：</p>
+            <ul>
+              <li>页面留白多，感觉宽松</li>
+              <li>排列非常整齐、对称、视觉感受平衡、舒适</li>
+            </ul>
+            <div class="example-block" id="exampleSimple">
+              <p class="example-caption">简洁布局示例（左：原始截图，右：布局结构图）</p>
+              <div class="example-images">
+                <img src="images/22.jpeg" alt="简洁布局示例" class="example-img" id="exampleSimpleImg" />
+              </div>
+            </div>
+
+            <p><strong>【非常复杂】</strong>的布局，通常具有以下特征：</p>
+            <ul>
+              <li>元素非常拥挤</li>
+              <li>分组和层级不清晰，感觉混乱</li>
+              <li>排列不规律，视觉焦点分散</li>
+            </ul>
+            <div class="example-block" id="exampleComplex">
+              <p class="example-caption">复杂布局示例（左：原始截图，右：布局结构图）</p>
+              <div class="example-images">
+                <img src="images/10.jpeg" alt="复杂布局示例" class="example-img" id="exampleComplexImg" />
+              </div>
+            </div>
+
+            <p class="intro-ready">现在您已经了解了评分规则，准备好了吗？</p>
+          </div>
+          <div class="intro-actions">
+            <button class="btn btn--primary btn--large" type="button" id="btnStartRating">我已理解，开始评分</button>
+          </div>
+        </section>
+
+        <section class="card hidden" id="screenProfile" aria-labelledby="profileTitle">
           <h1 class="card__title" id="profileTitle">基本信息</h1>
           <p class="card__subtitle">
             编号会自动生成并保存到本机（刷新不丢）。确认后进入组别选择（20 组 × 每组 50 张）。
@@ -64,6 +126,7 @@
               <p class="card__subtitle">共 20 组，每组 50 张图。这里只做组别选择（后续可接评分页）。</p>
             </div>
             <div class="card__topActions">
+              <button class="btn btn--primary" type="button" id="btnExport">导出数据（CSV）</button>
               <button class="btn" type="button" id="btnBackToProfile">返回修改信息</button>
               <button class="btn btn--danger" type="button" id="btnResetAll2">清空本地数据</button>
             </div>
@@ -73,11 +136,50 @@
 
           <div class="groups" id="groupsGrid" role="list"></div>
         </section>
+
+        <section class="card hidden" id="screenGroupImages" aria-labelledby="groupImagesTitle">
+          <div class="card__top">
+            <h2 class="card__title" id="groupImagesTitle">第 01 组</h2>
+            <button class="btn" type="button" id="btnBackToGroups">返回组别</button>
+          </div>
+          <div class="rating-flow" id="ratingFlowWrap">
+            <p class="rating-progress" id="ratingProgress">第 1 / 50 张</p>
+            <div class="rating-image-wrap">
+              <img class="rating-big-image" id="ratingBigImage" src="" alt="" />
+            </div>
+            <div class="scale-7-wrap">
+              <p class="scale-7-label">请选择布局复杂度（1 = 最简单，7 = 最复杂）</p>
+              <div class="scale-7" id="scale7" role="radiogroup" aria-label="7 分量表">
+                <button type="button" class="scale-7__option" data-value="1">1</button>
+                <button type="button" class="scale-7__option" data-value="2">2</button>
+                <button type="button" class="scale-7__option" data-value="3">3</button>
+                <button type="button" class="scale-7__option" data-value="4">4</button>
+                <button type="button" class="scale-7__option" data-value="5">5</button>
+                <button type="button" class="scale-7__option" data-value="6">6</button>
+                <button type="button" class="scale-7__option" data-value="7">7</button>
+              </div>
+            </div>
+            <div class="rating-actions">
+              <button class="btn" type="button" id="btnPrevImage">上一张</button>
+              <button class="btn btn--primary" type="button" id="btnNextImage">下一张</button>
+            </div>
+          </div>
+          <div class="rating-complete hidden" id="ratingCompleteWrap">
+            <p class="rating-complete__msg">第 <span id="ratingCompleteGroupNum">01</span> 组已完成，谢谢您的参与～</p>
+            <div class="rating-complete__actions">
+              <button class="btn" type="button" id="btnBackAfterComplete">返回组别</button>
+              <button class="btn btn--primary" type="button" id="btnDownloadGroup">下载本组数据</button>
+            </div>
+          </div>
+        </section>
       </main>
 
       <footer class="footer">
-        <div class="footer__text">
-          本页面为静态原型：数据仅保存在浏览器本地（localStorage），目前不上传也不收集评分结果。
+        <div class="footer__row">
+          <div class="footer__text">
+            数据仅保存在浏览器本地（localStorage）。完成后可点击「导出数据」下载 CSV 发给研究者。
+          </div>
+          <button class="btn btn--secondary" type="button" id="btnExportFooter">导出数据（CSV）</button>
         </div>
       </footer>
     </div>
